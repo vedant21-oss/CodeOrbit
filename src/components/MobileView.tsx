@@ -4,20 +4,14 @@ import {
   Camera, 
   GitPullRequest, 
   Play, 
-  MessageSquare, 
   Home, 
   Activity, 
   FolderGit2, 
   Bot, 
   Settings as SettingsIcon,
-  CheckCircle2,
   AlertTriangle,
   ArrowRight,
   Mic,
-  Shield,
-  Zap,
-  ChevronRight,
-  Terminal
 } from 'lucide-react';
 import { SyncState, IssueItem, TestSuiteResult, PullRequestReview } from '../types';
 
@@ -51,7 +45,7 @@ export const MobileView: React.FC<MobileViewProps> = ({
   const [chatMessages, setChatMessages] = useState<Array<{ sender: 'user' | 'ai'; text: string; action?: string }>>([
     {
       sender: 'ai',
-      text: 'Good afternoon! CodeOrbit AI is connected to your laptop sandbox. How can I assist your workflow today?',
+      text: 'Connected to laptop sandbox. How can I assist your workflow today?',
     }
   ]);
 
@@ -69,17 +63,8 @@ export const MobileView: React.FC<MobileViewProps> = ({
           ...prev,
           {
             sender: 'ai',
-            text: 'I analyzed the build output and identified a likely null pointer exception in `src/middleware/authMiddleware.ts:42`. Confidence: 94%.',
+            text: 'Null pointer exception detected in `src/middleware/authMiddleware.ts:42`. Confidence: 94%.',
             action: 'VIEW_ROOT_CAUSE'
-          }
-        ]);
-      } else if (query.toLowerCase().includes('security') || query.toLowerCase().includes('secret')) {
-        setChatMessages(prev => [
-          ...prev,
-          {
-            sender: 'ai',
-            text: 'Critical Security Vulnerability: Hardcoded production secret key found in `src/config/apiConfig.ts:12`. Recommended fix: convert to `process.env.JWT_SECRET_KEY`.',
-            action: 'GENERATE_SECURITY_FIX'
           }
         ]);
       } else {
@@ -87,229 +72,195 @@ export const MobileView: React.FC<MobileViewProps> = ({
           ...prev,
           {
             sender: 'ai',
-            text: `CodeOrbit AI inspected codeorbit-demo (248 files). Query "${query}" matched authentication middleware and payment service.`,
+            text: `Inspected codeorbit-demo repository. "${query}" matches authentication middleware and payment service.`,
           }
         ]);
       }
-    }, 800);
+    }, 600);
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-between bg-surface-950 text-surface-100 font-sans select-none">
+    <div className="flex-1 flex flex-col justify-between bg-[#07080D] text-slate-100 font-sans select-none">
       
-      {/* Scrollable Content Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {/* Content Container */}
+      <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5">
         
-        {/* Header Status Bar */}
-        <div className="flex items-center justify-between bg-surface-900/80 p-3 rounded-2xl border border-surface-800">
+        {/* Header Status */}
+        <div className="flex items-center justify-between bg-white/[0.02] p-2.5 rounded-xl border border-white/[0.06]">
           <div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-xs font-medium text-surface-300">Good afternoon 👋</span>
-              <span className="text-xs font-bold text-white">codeorbit-demo</span>
+            <div className="flex items-center space-x-1.5 text-xs">
+              <span className="text-slate-400">Repo:</span>
+              <span className="font-semibold text-white">codeorbit-demo</span>
             </div>
-            <div className="flex items-center space-x-2 text-[10px] text-surface-400 mt-1">
+            <div className="flex items-center space-x-2 text-[10px] text-slate-400 mt-0.5 font-mono">
               <span className="flex items-center space-x-1 text-emerald-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>GitHub Connected</span>
+                <span>GitHub</span>
               </span>
               <span>•</span>
-              <span className="flex items-center space-x-1 text-iqoo-amber">
-                <span className="w-1.5 h-1.5 rounded-full bg-iqoo-amber animate-pulse" />
-                <span>Laptop Connected</span>
+              <span className="flex items-center space-x-1 text-[#FF6B00]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
+                <span>Laptop</span>
               </span>
             </div>
           </div>
 
-          <div className="w-8 h-8 rounded-xl bg-iqoo-amber/15 border border-iqoo-amber/30 flex items-center justify-center text-iqoo-amber font-bold text-xs">
+          <div className="w-7 h-7 rounded-lg bg-[#FF6B00]/10 border border-[#FF6B00]/20 flex items-center justify-center text-[#FF6B00] font-bold text-[10px]">
             iQOO
           </div>
         </div>
 
         {/* Tab 1: HOME */}
         {activeMobileTab === 'home' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             
-            {/* Primary Action Section */}
-            <div>
-              <p className="text-xs font-semibold text-surface-400 uppercase tracking-wider mb-2">
-                What do you need?
-              </p>
-
-              {/* Primary Action Button: ASK CODEORBIT */}
-              <button
-                onClick={() => setActiveMobileTab('ai')}
-                className="w-full p-4 rounded-2xl bg-gradient-to-r from-iqoo-amber to-iqoo-orange text-white shadow-iqoo flex items-center justify-between font-bold group text-left transition-all active:scale-[0.98]"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white backdrop-blur-md">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-base tracking-tight block">Ask CodeOrbit</span>
-                    <span className="text-xs font-normal text-white/80">AI Codebase Reasoning & Assistance</span>
-                  </div>
+            {/* Primary Action Button */}
+            <button
+              onClick={() => setActiveMobileTab('ai')}
+              className="w-full p-3.5 rounded-xl bg-[#FF6B00] hover:bg-[#FF5500] text-white shadow-md shadow-[#FF6B00]/20 flex items-center justify-between font-semibold group text-left transition-all active:scale-[0.98]"
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white">
+                  <Sparkles className="w-4 h-4" />
                 </div>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
+                <div>
+                  <span className="text-xs font-bold block">Ask CodeOrbit AI</span>
+                  <span className="text-[10px] text-white/80">Codebase Reasoning</span>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
 
-            {/* Grid of Secondary Quick Action Tiles */}
+            {/* Quick Action Tiles */}
             <div className="grid grid-cols-3 gap-2">
-              {/* Scan Error */}
               <button
                 onClick={onOpenCamera}
-                className="p-3 rounded-2xl bg-surface-900 border border-surface-800 hover:border-iqoo-amber/40 flex flex-col items-center justify-center space-y-2 text-center transition-all active:scale-95 group"
+                className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-[#FF6B00]/40 flex flex-col items-center justify-center space-y-1.5 text-center transition-all active:scale-95 group"
               >
-                <div className="w-9 h-9 rounded-xl bg-iqoo-amber/10 border border-iqoo-amber/20 flex items-center justify-center text-iqoo-amber group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-lg bg-[#FF6B00]/10 border border-[#FF6B00]/20 flex items-center justify-center text-[#FF6B00] group-hover:scale-105 transition-transform">
                   <Camera className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-semibold text-surface-200">Scan Error</span>
+                <span className="text-[11px] font-medium text-slate-200">Scan Error</span>
               </button>
 
-              {/* Review PR */}
               <button
                 onClick={() => onSelectTab('prs')}
-                className="p-3 rounded-2xl bg-surface-900 border border-surface-800 hover:border-iqoo-amber/40 flex flex-col items-center justify-center space-y-2 text-center transition-all active:scale-95 group"
+                className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-blue-500/40 flex flex-col items-center justify-center space-y-1.5 text-center transition-all active:scale-95 group"
               >
-                <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
                   <GitPullRequest className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-semibold text-surface-200">Review PR</span>
+                <span className="text-[11px] font-medium text-slate-200">Review PR</span>
               </button>
 
-              {/* Run Tests */}
               <button
                 onClick={onRunTests}
-                className="p-3 rounded-2xl bg-surface-900 border border-surface-800 hover:border-iqoo-amber/40 flex flex-col items-center justify-center space-y-2 text-center transition-all active:scale-95 group"
+                className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-emerald-500/40 flex flex-col items-center justify-center space-y-1.5 text-center transition-all active:scale-95 group"
               >
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
                   <Play className="w-4 h-4 fill-current" />
                 </div>
-                <span className="text-xs font-semibold text-surface-200">Run Tests</span>
+                <span className="text-[11px] font-medium text-slate-200">Run Tests</span>
               </button>
             </div>
 
-            {/* Voice Command Button */}
+            {/* Voice Bar */}
             <button
               onClick={onOpenVoice}
-              className="w-full py-2.5 px-4 rounded-xl bg-surface-900 border border-surface-800 flex items-center justify-between text-xs text-surface-300 hover:text-white hover:border-iqoo-amber/40 transition-all"
+              className="w-full py-2 px-3 rounded-lg bg-white/[0.02] border border-white/[0.06] flex items-center justify-between text-xs text-slate-300 hover:border-[#FF6B00]/40 transition-all"
             >
               <div className="flex items-center space-x-2">
-                <Mic className="w-4 h-4 text-iqoo-amber animate-pulse" />
-                <span>Voice Command: "Why did my build fail?"</span>
+                <Mic className="w-3.5 h-3.5 text-[#FF6B00] animate-pulse" />
+                <span className="text-[11px]">Voice: "Why did build fail?"</span>
               </div>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-iqoo-amber/20 text-iqoo-amber">
-                iQOO Voice
+              <span className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#FF6B00]/15 text-[#FF6B00]">
+                Voice AI
               </span>
             </button>
 
-            {/* HERO WORKFLOW STATE CARD */}
-            <div className="p-4 rounded-2xl bg-surface-900 border border-surface-800 space-y-3">
+            {/* Diagnostic Card */}
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 text-xs font-bold text-surface-200">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
-                  <span>CURRENT REPOSITORY DIAGNOSTIC</span>
+                <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-200">
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                  <span>REPOSITORY DIAGNOSTIC</span>
                 </div>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                  {isFixApplied ? '✓ Fix Applied' : 'Issue Detected'}
+                <span className="text-[9px] font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  {isFixApplied ? '✓ Patch Applied' : 'Issue Detected'}
                 </span>
               </div>
 
               <div>
-                <p className="text-xs font-mono text-surface-300">
-                  authMiddleware.ts:42
-                </p>
-                <p className="text-xs text-surface-400 mt-1">
-                  {issue.rootCause.summary}
-                </p>
+                <p className="text-[11px] font-mono text-slate-300">authMiddleware.ts:42</p>
+                <p className="text-xs text-slate-400 mt-0.5">{issue.rootCause.summary}</p>
               </div>
 
-              {/* Confidence Gauge */}
-              <div className="flex items-center justify-between text-xs bg-surface-950 p-2.5 rounded-xl border border-surface-800">
-                <span className="text-surface-400">AI Confidence:</span>
-                <span className="text-emerald-400 font-bold">94% High Confidence</span>
-              </div>
-
-              {/* Actions */}
               <div className="grid grid-cols-2 gap-2 pt-1">
                 <button
                   onClick={() => onSelectTab('debugger')}
-                  className="py-2 px-3 rounded-xl bg-surface-800 text-surface-200 hover:text-white text-xs font-semibold text-center"
+                  className="py-1.5 px-3 rounded-lg bg-white/[0.04] text-slate-200 hover:text-white text-xs font-medium text-center"
                 >
-                  View Root Cause
+                  View Cause
                 </button>
                 <button
                   onClick={onGenerateFix}
-                  className={`py-2 px-3 rounded-xl text-xs font-semibold text-center transition-all ${
+                  className={`py-1.5 px-3 rounded-lg text-xs font-semibold text-center transition-all ${
                     isFixApplied
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                      : 'bg-iqoo-amber text-white shadow-iqoo'
+                      : 'bg-[#FF6B00] text-white shadow-sm'
                   }`}
                 >
-                  {isFixApplied ? '✓ Fix Applied' : 'Generate Fix'}
+                  {isFixApplied ? '✓ Applied' : 'Generate Fix'}
                 </button>
               </div>
             </div>
 
-            {/* TEST VERIFICATION STATUS CARD */}
+            {/* Test Results */}
             {testResults && (
-              <div className="p-4 rounded-2xl bg-surface-900 border border-surface-800 space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="text-surface-200">TEST RUNNER STATUS</span>
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                  <span className="text-slate-300">TEST VERIFICATION</span>
                   <span className={testResults.failed === 0 ? 'text-emerald-400' : 'text-amber-400'}>
-                    {testResults.failed === 0 ? '✓ FIX VERIFIED' : '3 FAILURES'}
+                    {testResults.failed === 0 ? '✓ PASSED' : 'FAILURES'}
                   </span>
                 </div>
-
-                <div className="w-full h-2 rounded-full bg-surface-950 overflow-hidden">
-                  <div 
-                    className={`h-full transition-all duration-500 ${
-                      testResults.failed === 0 ? 'bg-emerald-400' : 'bg-amber-400'
-                    }`}
-                    style={{ width: `${(testResults.passed / testResults.total) * 100}%` }}
-                  />
-                </div>
-
-                <p className="text-xs text-surface-300 font-mono">
-                  {testResults.passed} / {testResults.total} tests passed (0 failed). Safe to merge.
+                <p className="text-[11px] text-slate-400 font-mono">
+                  {testResults.passed} / {testResults.total} tests passed. Safe to merge.
                 </p>
               </div>
             )}
           </div>
         )}
 
-        {/* Tab 2: AI ASSISTANT CHAT */}
+        {/* Tab 2: AI CHAT */}
         {activeMobileTab === 'ai' && (
-          <div className="h-[480px] flex flex-col justify-between space-y-3">
-            <div className="flex items-center justify-between px-2 pb-2 border-b border-surface-800">
-              <div className="flex items-center space-x-2 text-xs font-bold text-surface-200">
-                <Bot className="w-4 h-4 text-iqoo-amber" />
+          <div className="h-[440px] flex flex-col justify-between space-y-2">
+            <div className="flex items-center justify-between px-1 pb-1.5 border-b border-white/[0.06]">
+              <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-200">
+                <Bot className="w-4 h-4 text-[#FF6B00]" />
                 <span>CodeOrbit AI Assistant</span>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-iqoo-amber/20 text-iqoo-amber">
-                iQOO Agent
-              </span>
             </div>
 
             {/* Chat History */}
-            <div className="flex-1 overflow-y-auto space-y-3 pr-1">
+            <div className="flex-1 overflow-y-auto space-y-2 pr-1">
               {chatMessages.map((msg, idx) => (
                 <div
                   key={idx}
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-xs ${
+                    className={`max-w-[85%] p-2.5 rounded-xl text-xs ${
                       msg.sender === 'user'
-                        ? 'bg-iqoo-amber text-white rounded-br-none'
-                        : 'bg-surface-900 border border-surface-800 text-surface-200 rounded-bl-none'
+                        ? 'bg-[#FF6B00] text-white rounded-br-none'
+                        : 'bg-white/[0.03] border border-white/[0.06] text-slate-200 rounded-bl-none'
                     }`}
                   >
                     <p className="leading-relaxed">{msg.text}</p>
                     {msg.action === 'VIEW_ROOT_CAUSE' && (
                       <button
                         onClick={() => onSelectTab('debugger')}
-                        className="mt-2 text-[11px] font-bold text-iqoo-amber underline block"
+                        className="mt-1.5 text-[11px] font-semibold text-[#FF6B00] underline block"
                       >
                         View authMiddleware.ts:42 Root Cause →
                       </button>
@@ -320,59 +271,50 @@ export const MobileView: React.FC<MobileViewProps> = ({
             </div>
 
             {/* Chat Input */}
-            <form onSubmit={handleSendChat} className="flex items-center space-x-2 pt-2 border-t border-surface-800">
+            <form onSubmit={handleSendChat} className="flex items-center space-x-1.5 pt-2 border-t border-white/[0.06]">
               <input
                 type="text"
                 value={aiQuestion}
                 onChange={(e) => setAiQuestion(e.target.value)}
-                placeholder="Ask about authentication, payment flow, or build errors..."
-                className="flex-1 px-3.5 py-2.5 rounded-xl bg-surface-900 border border-surface-800 text-xs text-white placeholder-surface-500 focus:outline-none focus:border-iqoo-amber"
+                placeholder="Ask about auth, payments, build logs..."
+                className="flex-1 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#FF6B00]"
               />
               <button
                 type="submit"
-                className="p-2.5 rounded-xl bg-iqoo-amber text-white font-bold hover:bg-iqoo-orange"
+                className="p-2 rounded-lg bg-[#FF6B00] text-white hover:bg-[#FF5500]"
               >
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
           </div>
         )}
 
-        {/* Tab 3: PR REVIEW SUMMARY */}
+        {/* Tab 3: PR REVIEW */}
         {activeMobileTab === 'repo' && (
-          <div className="space-y-3">
-            <div className="p-4 rounded-2xl bg-surface-900 border border-surface-800 space-y-3">
+          <div className="space-y-2 text-xs">
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-bold text-white block">PR #142 Review</span>
-                  <span className="text-[11px] text-surface-400">feat(auth): refactor JWT verification</span>
+                  <span className="font-semibold text-white block">PR #142 Review</span>
+                  <span className="text-[11px] text-slate-400">feat(auth): JWT refactor</span>
                 </div>
-                <div className="text-right">
-                  <span className="text-xs font-bold text-amber-400 block">Score: {prReview.score}/100</span>
-                  <span className="text-[10px] text-surface-400">CodeOrbit AI</span>
-                </div>
+                <span className="font-mono font-bold text-amber-400">Score: {prReview.score}/100</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 rounded-xl bg-surface-950 border border-surface-800 text-amber-400 font-semibold">
-                  🐛 {prReview.bugsCount} Bugs Found
+              <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                <div className="p-2 rounded-lg bg-[#090A0F] border border-white/[0.06] text-amber-400">
+                  🐛 {prReview.bugsCount} Bugs
                 </div>
-                <div className="p-2.5 rounded-xl bg-surface-950 border border-surface-800 text-red-400 font-semibold">
-                  🔐 {prReview.securityCount} Critical Flaw
-                </div>
-                <div className="p-2.5 rounded-xl bg-surface-950 border border-surface-800 text-blue-400 font-semibold">
-                  🧪 {prReview.missingTestsCount} Missing Tests
-                </div>
-                <div className="p-2.5 rounded-xl bg-surface-950 border border-surface-800 text-surface-300 font-semibold">
-                  ⚡ {prReview.performanceCount} Perf Issue
+                <div className="p-2 rounded-lg bg-[#090A0F] border border-white/[0.06] text-red-400">
+                  🔐 {prReview.securityCount} Security Flaw
                 </div>
               </div>
 
               <button
                 onClick={() => onSelectTab('prs')}
-                className="w-full py-2 rounded-xl bg-surface-800 text-surface-200 text-xs font-semibold text-center hover:text-white"
+                className="w-full py-1.5 rounded-lg bg-white/[0.04] text-slate-300 text-xs text-center hover:text-white"
               >
-                View Full PR Findings on Desktop Console →
+                View Full PR Review →
               </button>
             </div>
           </div>
@@ -380,22 +322,18 @@ export const MobileView: React.FC<MobileViewProps> = ({
 
         {/* Tab 4: ACTIVITY FEED */}
         {activeMobileTab === 'activity' && (
-          <div className="space-y-3 text-xs">
-            <h4 className="font-bold text-surface-200 text-xs uppercase tracking-wider">
-              Live iQOO Sync Activity
+          <div className="space-y-2 text-xs">
+            <h4 className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">
+              Live Sync Events
             </h4>
-            <div className="space-y-2">
-              <div className="p-3 rounded-xl bg-surface-900 border border-surface-800">
-                <span className="text-emerald-400 font-bold block">✓ Fix Verified</span>
-                <span className="text-surface-400 text-[11px]">17 / 17 unit tests passed on laptop execution runner.</span>
+            <div className="space-y-1.5">
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                <span className="text-emerald-400 font-semibold block text-[11px]">✓ Fix Verified</span>
+                <span className="text-slate-400 text-[10px]">17 tests passed on laptop runner.</span>
               </div>
-              <div className="p-3 rounded-xl bg-surface-900 border border-surface-800">
-                <span className="text-iqoo-amber font-bold block">📱 Phone Command Received</span>
-                <span className="text-surface-400 text-[11px]">Action: SCAN_ERROR via iQOO Vision Camera</span>
-              </div>
-              <div className="p-3 rounded-xl bg-surface-900 border border-surface-800">
-                <span className="text-blue-400 font-bold block">🤖 Root Cause Identified</span>
-                <span className="text-surface-400 text-[11px]">authMiddleware.ts:42 (94% confidence)</span>
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+                <span className="text-[#FF6B00] font-semibold block text-[11px]">📱 Camera OCR Event</span>
+                <span className="text-slate-400 text-[10px]">Scanned stack trace via camera.</span>
               </div>
             </div>
           </div>
@@ -403,76 +341,68 @@ export const MobileView: React.FC<MobileViewProps> = ({
 
         {/* Tab 5: SETTINGS */}
         {activeMobileTab === 'settings' && (
-          <div className="space-y-3 text-xs">
-            <div className="p-4 rounded-2xl bg-surface-900 border border-surface-800 space-y-2">
-              <h4 className="font-bold text-white">Device Settings</h4>
-              <p className="text-surface-400 text-[11px]">Device: iQOO 13 Pro 5G</p>
-              <p className="text-surface-400 text-[11px]">Execution Node: Laptop Connected</p>
-              <p className="text-surface-400 text-[11px]">Model: Gemini / Local Hybrid AI</p>
+          <div className="space-y-2 text-xs">
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1.5">
+              <h4 className="font-semibold text-white text-xs">Device Info</h4>
+              <p className="text-slate-400 text-[11px]">Device: iQOO 13 Pro 5G</p>
+              <p className="text-slate-400 text-[11px]">Connection: WebSocket Active</p>
             </div>
           </div>
         )}
 
       </div>
 
-      {/* MOBILE BOTTOM NAVIGATION (Section 11) */}
-      <nav className="h-16 bg-surface-900 border-t border-surface-800 px-3 flex items-center justify-around z-40 shrink-0">
-        
-        {/* 1. Home */}
+      {/* BOTTOM NAVIGATION */}
+      <nav className="h-14 bg-[#090A0F] border-t border-white/[0.06] px-2 flex items-center justify-around z-40 shrink-0">
         <button
           onClick={() => setActiveMobileTab('home')}
-          className={`flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-xl transition-all ${
-            activeMobileTab === 'home' ? 'text-iqoo-amber font-bold' : 'text-surface-400 hover:text-surface-200'
+          className={`flex flex-col items-center justify-center space-y-0.5 py-1 px-2.5 rounded-lg transition-all ${
+            activeMobileTab === 'home' ? 'text-[#FF6B00] font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <Home className="w-5 h-5" />
-          <span className="text-[10px]">Home</span>
+          <Home className="w-4 h-4" />
+          <span className="text-[9px]">Home</span>
         </button>
 
-        {/* 2. Activity */}
         <button
           onClick={() => setActiveMobileTab('activity')}
-          className={`flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-xl transition-all ${
-            activeMobileTab === 'activity' ? 'text-iqoo-amber font-bold' : 'text-surface-400 hover:text-surface-200'
+          className={`flex flex-col items-center justify-center space-y-0.5 py-1 px-2.5 rounded-lg transition-all ${
+            activeMobileTab === 'activity' ? 'text-[#FF6B00] font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <Activity className="w-5 h-5" />
-          <span className="text-[10px]">Activity</span>
+          <Activity className="w-4 h-4" />
+          <span className="text-[9px]">Activity</span>
         </button>
 
-        {/* 3. Repository */}
         <button
           onClick={() => setActiveMobileTab('repo')}
-          className={`flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-xl transition-all ${
-            activeMobileTab === 'repo' ? 'text-iqoo-amber font-bold' : 'text-surface-400 hover:text-surface-200'
+          className={`flex flex-col items-center justify-center space-y-0.5 py-1 px-2.5 rounded-lg transition-all ${
+            activeMobileTab === 'repo' ? 'text-[#FF6B00] font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <FolderGit2 className="w-5 h-5" />
-          <span className="text-[10px]">Repository</span>
+          <FolderGit2 className="w-4 h-4" />
+          <span className="text-[9px]">Repo</span>
         </button>
 
-        {/* 4. AI Assistant */}
         <button
           onClick={() => setActiveMobileTab('ai')}
-          className={`flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-xl transition-all ${
-            activeMobileTab === 'ai' ? 'text-iqoo-amber font-bold' : 'text-surface-400 hover:text-surface-200'
+          className={`flex flex-col items-center justify-center space-y-0.5 py-1 px-2.5 rounded-lg transition-all ${
+            activeMobileTab === 'ai' ? 'text-[#FF6B00] font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <Bot className="w-5 h-5" />
-          <span className="text-[10px]">AI</span>
+          <Bot className="w-4 h-4" />
+          <span className="text-[9px]">AI</span>
         </button>
 
-        {/* 5. Settings */}
         <button
           onClick={() => setActiveMobileTab('settings')}
-          className={`flex flex-col items-center justify-center space-y-1 py-1 px-3 rounded-xl transition-all ${
-            activeMobileTab === 'settings' ? 'text-iqoo-amber font-bold' : 'text-surface-400 hover:text-surface-200'
+          className={`flex flex-col items-center justify-center space-y-0.5 py-1 px-2.5 rounded-lg transition-all ${
+            activeMobileTab === 'settings' ? 'text-[#FF6B00] font-semibold' : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <SettingsIcon className="w-5 h-5" />
-          <span className="text-[10px]">Settings</span>
+          <SettingsIcon className="w-4 h-4" />
+          <span className="text-[9px]">Settings</span>
         </button>
-
       </nav>
     </div>
   );
