@@ -61,23 +61,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   ];
 
   return (
-    <aside className="w-56 border-r border-white/[0.06] bg-[#07080D]/90 backdrop-blur-xl p-3 flex flex-col justify-between hidden md:flex shrink-0 select-none">
+    <aside className="w-56 border-r border-slate-200 bg-[#FAFAFA] p-3 flex flex-col justify-between hidden md:flex shrink-0 select-none">
       
       <div className="space-y-4">
         
         {/* Repo Info Header Box */}
-        <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1">
-          <div className="flex items-center justify-between text-[10px] text-slate-400">
+        <div className="p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs space-y-1">
+          <div className="flex items-center justify-between text-[10px] text-slate-500">
             <span>Repository</span>
-            <span className="text-emerald-400 font-mono text-[9px] flex items-center space-x-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
+            <span className="text-emerald-600 font-mono text-[9px] font-medium flex items-center space-x-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
               <span>Indexed</span>
             </span>
           </div>
-          <p className="font-semibold text-white text-xs tracking-tight truncate">
+          <p className="font-semibold text-slate-900 text-xs tracking-tight truncate">
             codeorbit-demo
           </p>
-          <div className="flex items-center space-x-1.5 text-[10px] text-slate-400 font-mono">
+          <div className="flex items-center space-x-1.5 text-[10px] text-slate-500 font-mono">
             <span>main</span>
             <span>•</span>
             <span>248 files</span>
@@ -102,31 +102,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                       onClick={() => setActiveTab(item.id as NavigationTab)}
                       className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all group ${
                         isActive
-                          ? 'bg-white/[0.08] text-white font-semibold border border-white/[0.08]'
-                          : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.02]'
+                          ? 'bg-slate-200/70 text-slate-900 font-semibold border border-slate-200 shadow-2xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/40'
                       }`}
                     >
                       <div className="flex items-center space-x-2 truncate">
                         <Icon className={`w-3.5 h-3.5 shrink-0 ${
-                          isActive ? 'text-[#FF6B00]' : 'text-slate-400 group-hover:text-slate-200'
+                          isActive ? 'text-[#EA580C]' : 'text-slate-500 group-hover:text-slate-800'
                         }`} />
                         <span className="truncate">{item.label}</span>
                       </div>
 
                       <div className="flex items-center space-x-1 shrink-0">
                         {item.dot === 'amber' && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#EA580C] animate-pulse" />
                         )}
                         {item.dot === 'red' && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         )}
                         {item.count && (
-                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/[0.06] text-slate-400 font-mono">
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-mono font-medium">
                             {item.count}
                           </span>
                         )}
                         {item.shortcut && (
-                          <span className="text-[10px] text-slate-500 font-mono hidden group-hover:inline-block">
+                          <span className="text-[10px] text-slate-400 font-mono hidden group-hover:inline-block">
                             {item.shortcut}
                           </span>
                         )}
@@ -142,12 +142,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
       </div>
 
       {/* Footer Device Status */}
-      <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-1 text-xs">
-        <div className="flex items-center space-x-1.5 text-[#FF6B00] font-semibold text-[11px]">
+      <div className="p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs space-y-1 text-xs">
+        <div className="flex items-center space-x-1.5 text-[#EA580C] font-semibold text-[11px]">
           <Smartphone className="w-3.5 h-3.5" />
           <span>iQOO 13 Pro Connected</span>
         </div>
-        <p className="text-slate-400 text-[10px] leading-relaxed">
+        <p className="text-slate-500 text-[10px] leading-relaxed">
           Commands from your phone execute live on laptop host.
         </p>
       </div>

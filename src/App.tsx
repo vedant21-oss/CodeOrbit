@@ -123,7 +123,7 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-950 text-surface-100 flex flex-col font-sans selection:bg-iqoo-amber selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-[#EA580C] selection:text-white">
       
       {/* Header Bar */}
       <Header

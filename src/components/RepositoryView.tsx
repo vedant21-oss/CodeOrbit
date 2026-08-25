@@ -2,16 +2,11 @@ import React, { useState } from 'react';
 import { 
   FolderGit2, 
   FileCode, 
-  GitBranch, 
   Search, 
-  CheckCircle2, 
   Sparkles, 
   GitCommit, 
-  Code2, 
-  ExternalLink,
   ShieldAlert,
   Bug,
-  ChevronRight,
   FileText
 } from 'lucide-react';
 import { RepositoryInfo, IssueItem, NavigationTab } from '../types';
@@ -113,38 +108,38 @@ describe('Authentication Suite', () => {
   const activeFileObject = demoFiles.find(f => f.path === selectedFile) || demoFiles[0];
 
   return (
-    <div className="space-y-5 max-w-6xl mx-auto">
+    <div className="space-y-4 max-w-6xl mx-auto">
       
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-2xl gap-4 shadow-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between p-5 rounded-2xl bg-white border border-slate-200 shadow-xs gap-4">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-iqoo-amber to-iqoo-orange flex items-center justify-center text-white shadow-iqoo font-semibold">
+          <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center text-[#EA580C]">
             <FolderGit2 className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h2 className="text-base font-bold text-white tracking-tight font-mono">
+              <h2 className="text-base font-bold text-slate-900 tracking-tight font-mono">
                 {repo.owner} / {repo.name}
               </h2>
-              <span className="text-[10px] px-2 py-0.2 rounded bg-emerald-500/15 text-emerald-400 font-medium border border-emerald-500/25">
+              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
                 ✓ AI Indexed
               </span>
             </div>
-            <p className="text-xs text-surface-400 mt-0.5">
-              CodeOrbit AST Indexing • 248 files • Branch: <span className="text-white font-mono">main</span>
+            <p className="text-xs text-slate-500 mt-0.5">
+              CodeOrbit AST Indexing • 248 files • Branch: <span className="text-slate-800 font-mono">main</span>
             </p>
           </div>
         </div>
 
         <div className="flex items-center space-x-3 text-xs">
-          <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.08] text-surface-300">
-            <GitCommit className="w-3.5 h-3.5 text-iqoo-amber" />
+          <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700">
+            <GitCommit className="w-3.5 h-3.5 text-[#EA580C]" />
             <span className="font-mono">63f2990</span>
           </div>
           
           <button
             onClick={() => onNavigateTab('graph')}
-            className="px-3.5 py-1.5 rounded-xl bg-iqoo-amber hover:bg-iqoo-orange text-white font-semibold shadow-iqoo flex items-center space-x-1.5 transition-all"
+            className="px-3.5 py-1.5 rounded-xl bg-[#EA580C] hover:bg-orange-600 text-white font-semibold shadow-2xs flex items-center space-x-1.5 transition-all"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Dependency Graph</span>
@@ -153,48 +148,48 @@ describe('Authentication Suite', () => {
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08]">
-          <span className="text-[10px] text-surface-400 block font-medium uppercase tracking-wider">Total Files</span>
-          <span className="text-base font-bold text-white font-mono">248 Files</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">Total Files</span>
+          <span className="text-sm font-bold text-slate-900 font-mono">248 Files</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08]">
-          <span className="text-[10px] text-surface-400 block font-medium uppercase tracking-wider">AST Nodes</span>
-          <span className="text-base font-bold text-iqoo-amber font-mono">1,420 Nodes</span>
+        <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">AST Nodes</span>
+          <span className="text-sm font-bold text-[#EA580C] font-mono">1,420 Nodes</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white/[0.02] border border-amber-500/30">
-          <span className="text-[10px] text-surface-400 block font-medium uppercase tracking-wider">Open Diagnostics</span>
-          <span className="text-base font-bold text-amber-400 font-mono">1 Issue</span>
+        <div className="p-3.5 rounded-xl bg-white border border-amber-200 shadow-2xs">
+          <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">Open Diagnostics</span>
+          <span className="text-sm font-bold text-amber-700 font-mono">1 Issue</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white/[0.02] border border-red-500/30">
-          <span className="text-[10px] text-surface-400 block font-medium uppercase tracking-wider">Security Alerts</span>
-          <span className="text-base font-bold text-red-400 font-mono">1 Critical</span>
+        <div className="p-3.5 rounded-xl bg-white border border-red-200 shadow-2xs">
+          <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">Security Alerts</span>
+          <span className="text-sm font-bold text-red-600 font-mono">1 Critical</span>
         </div>
       </div>
 
       {/* File Tree & Code Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         {/* Left: File List */}
-        <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-3">
+        <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-white tracking-tight">
+            <span className="text-xs font-semibold text-slate-900 tracking-tight">
               File Explorer
             </span>
-            <span className="text-[10px] text-surface-400 font-mono">{filteredFiles.length} files</span>
+            <span className="text-[10px] text-slate-500 font-mono">{filteredFiles.length} files</span>
           </div>
 
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-surface-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter files..."
-              className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/40 border border-white/[0.08] text-xs text-white placeholder-surface-500 focus:outline-none focus:border-iqoo-amber"
+              className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#EA580C]"
             />
           </div>
 
@@ -207,25 +202,25 @@ describe('Authentication Suite', () => {
                   onClick={() => setSelectedFile(file.path)}
                   className={`w-full p-2.5 rounded-xl border text-left text-xs font-mono transition-all flex items-center justify-between ${
                     isSelected
-                      ? 'bg-iqoo-amber/15 border-iqoo-amber/40 text-iqoo-amber font-semibold'
-                      : 'bg-black/20 border-white/[0.06] text-surface-300 hover:text-white hover:border-white/[0.12]'
+                      ? 'bg-orange-50 border-orange-200 text-[#EA580C] font-semibold'
+                      : 'bg-slate-50/50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
                   <div className="flex items-center space-x-2 truncate pr-2">
                     <FileCode className={`w-3.5 h-3.5 shrink-0 ${
-                      file.status === 'issue' ? 'text-amber-400' :
-                      file.status === 'security' ? 'text-red-400' : 'text-surface-400'
+                      file.status === 'issue' ? 'text-amber-600' :
+                      file.status === 'security' ? 'text-red-600' : 'text-slate-400'
                     }`} />
                     <span className="truncate">{file.path}</span>
                   </div>
 
                   {file.status === 'issue' && (
-                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 shrink-0">
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-50 text-amber-700 border border-amber-200 shrink-0">
                       Bug L42
                     </span>
                   )}
                   {file.status === 'security' && (
-                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-red-500/20 text-red-400 shrink-0">
+                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-red-50 text-red-700 border border-red-200 shrink-0">
                       Secret
                     </span>
                   )}
@@ -237,21 +232,21 @@ describe('Authentication Suite', () => {
 
         {/* Right: Code Inspector */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-3">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
             
-            <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <div className="flex items-center space-x-2">
-                <FileText className="w-4 h-4 text-iqoo-amber" />
-                <span className="font-mono text-xs font-semibold text-white">
+                <FileText className="w-4 h-4 text-[#EA580C]" />
+                <span className="font-mono text-xs font-semibold text-slate-900">
                   {activeFileObject.path}
                 </span>
-                <span className="text-[11px] text-surface-400">({activeFileObject.lines} lines)</span>
+                <span className="text-[11px] text-slate-500">({activeFileObject.lines} lines)</span>
               </div>
 
               {activeFileObject.status === 'issue' && (
                 <button
                   onClick={() => onNavigateTab('debugger')}
-                  className="px-3 py-1 rounded-lg bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30 text-xs font-medium flex items-center space-x-1"
+                  className="px-3 py-1 rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 text-xs font-medium flex items-center space-x-1"
                 >
                   <Bug className="w-3.5 h-3.5" />
                   <span>Inspect Root Cause →</span>
@@ -261,7 +256,7 @@ describe('Authentication Suite', () => {
               {activeFileObject.status === 'security' && (
                 <button
                   onClick={() => onNavigateTab('security')}
-                  className="px-3 py-1 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 text-xs font-medium flex items-center space-x-1"
+                  className="px-3 py-1 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 text-xs font-medium flex items-center space-x-1"
                 >
                   <ShieldAlert className="w-3.5 h-3.5" />
                   <span>Inspect Security Alert →</span>
@@ -269,22 +264,22 @@ describe('Authentication Suite', () => {
               )}
             </div>
 
-            <p className="text-xs text-surface-300">
+            <p className="text-xs text-slate-600">
               {activeFileObject.desc}
             </p>
 
-            <div className="p-4 rounded-xl bg-black/50 border border-white/[0.08] font-mono text-xs text-surface-200 overflow-x-auto leading-relaxed">
+            <div className="p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs overflow-x-auto leading-relaxed border border-slate-800">
               <pre>{activeFileObject.snippet}</pre>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.08] flex items-center justify-between text-xs">
-              <div className="flex items-center space-x-2 text-surface-400">
-                <Sparkles className="w-4 h-4 text-iqoo-amber" />
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+              <div className="flex items-center space-x-2 text-slate-600">
+                <Sparkles className="w-4 h-4 text-[#EA580C]" />
                 <span>CodeOrbit AI indexed AST for this file with 100% precision.</span>
               </div>
               <button
                 onClick={onGenerateFix}
-                className="px-3.5 py-1.5 rounded-xl bg-iqoo-amber text-white font-semibold hover:bg-iqoo-orange transition-all"
+                className="px-3.5 py-1.5 rounded-xl bg-[#EA580C] text-white font-semibold hover:bg-orange-600 transition-all shadow-2xs"
               >
                 Auto-Fix (1-Click)
               </button>
