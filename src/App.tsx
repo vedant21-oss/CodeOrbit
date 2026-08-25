@@ -143,138 +143,127 @@ export function App() {
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Main Content Workspace */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6">
-          
-          {/* Dual View Layout: Desktop Console Content + Optional iQOO Phone Frame Simulator */}
-          <div className={`grid grid-cols-1 ${showPhoneFrame ? 'xl:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-            
-            {/* Desktop Console View Area */}
-            <div className={showPhoneFrame ? 'xl:col-span-2 space-y-6' : 'space-y-6'}>
-              
-              {activeTab === 'home' && (
-                <DashboardView
-                  repo={repo}
-                  issue={issue}
-                  testResults={testResults}
-                  prReview={prReview}
-                  activityLog={activityLog}
-                  syncState={syncState}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 min-w-0">
+          {activeTab === 'home' && (
+            <DashboardView
+              repo={repo}
+              issue={issue}
+              testResults={testResults}
+              prReview={prReview}
+              activityLog={activityLog}
+              syncState={syncState}
+              isFixApplied={isFixApplied}
+              onNavigateTab={setActiveTab}
+              onGenerateFix={handleGenerateFix}
+              onRunTests={handleRunTests}
+              onOpenCamera={() => setIsCameraOpen(true)}
+            />
+          )}
+
+          {activeTab === 'repository' && (
+            <RepositoryView
+              repo={repo}
+              issue={issue}
+              onNavigateTab={setActiveTab}
+              onGenerateFix={handleGenerateFix}
+            />
+          )}
+
+          {activeTab === 'debugger' && (
+            <div className="space-y-6">
+              <AIDebuggerView
+                issue={issue}
+                syncState={syncState}
+                isFixApplied={isFixApplied}
+                onGenerateFix={handleGenerateFix}
+                onRunTests={handleRunTests}
+              />
+
+              {/* Git Patch Diff Viewer */}
+              {issue.patch && (
+                <FixDiffViewer
+                  patch={issue.patch}
                   isFixApplied={isFixApplied}
-                  onNavigateTab={setActiveTab}
-                  onGenerateFix={handleGenerateFix}
+                  onApplyFix={handleGenerateFix}
                   onRunTests={handleRunTests}
-                  onOpenCamera={() => setIsCameraOpen(true)}
                 />
               )}
 
-              {activeTab === 'repository' && (
-                <RepositoryView
-                  repo={repo}
-                  issue={issue}
-                  onNavigateTab={setActiveTab}
-                  onGenerateFix={handleGenerateFix}
-                />
-              )}
-
-              {activeTab === 'debugger' && (
-                <div className="space-y-6">
-                  <AIDebuggerView
-                    issue={issue}
-                    syncState={syncState}
-                    isFixApplied={isFixApplied}
-                    onGenerateFix={handleGenerateFix}
-                    onRunTests={handleRunTests}
-                  />
-
-                  {/* Git Patch Diff Viewer */}
-                  {issue.patch && (
-                    <FixDiffViewer
-                      patch={issue.patch}
-                      isFixApplied={isFixApplied}
-                      onApplyFix={handleGenerateFix}
-                      onRunTests={handleRunTests}
-                    />
-                  )}
-
-                  {/* Test Execution Panel */}
-                  <TestExecutionPanel
-                    testResults={testResults}
-                    isRunning={isTestRunning}
-                    progressPercent={testProgressPercent}
-                    progressStatus={testProgressStatus}
-                    onRunTests={handleRunTests}
-                    isFixApplied={isFixApplied}
-                  />
-                </div>
-              )}
-
-              {activeTab === 'graph' && (
-                <CodebaseGraphView nodes={nodes} />
-              )}
-
-              {activeTab === 'prs' && (
-                <PRReviewerCard
-                  pr={prReview}
-                  onGenerateFix={handleGenerateFix}
-                  onOpenVoice={() => setIsVoiceOpen(true)}
-                />
-              )}
-
-              {activeTab === 'security' && (
-                <SecurityAgentView
-                  onGenerateFix={handleGenerateFix}
-                  isFixApplied={isFixApplied}
-                />
-              )}
-
-              {activeTab === 'tests' && (
-                <TestExecutionPanel
-                  testResults={testResults}
-                  isRunning={isTestRunning}
-                  progressPercent={testProgressPercent}
-                  progressStatus={testProgressStatus}
-                  onRunTests={handleRunTests}
-                  isFixApplied={isFixApplied}
-                />
-              )}
-
-              {activeTab === 'activity' && (
-                <ActivityTimeline activities={activityLog} />
-              )}
-
-              {activeTab === 'settings' && (
-                <SettingsView
-                  syncState={syncState}
-                  onToggleDemoMode={() => setSyncState(prev => ({ ...prev, isDemoMode: !prev.isDemoMode }))}
-                  onChangeRuntime={(rt) => setSyncState(prev => ({ ...prev, aiRuntime: rt }))}
-                />
-              )}
-
+              {/* Test Execution Panel */}
+              <TestExecutionPanel
+                testResults={testResults}
+                isRunning={isTestRunning}
+                progressPercent={testProgressPercent}
+                progressStatus={testProgressStatus}
+                onRunTests={handleRunTests}
+                isFixApplied={isFixApplied}
+              />
             </div>
+          )}
 
-            {/* Right Column: iQOO Phone Frame Simulator (Visible when showPhoneFrame is true) */}
-            {showPhoneFrame && (
-              <div className="xl:col-span-1 flex flex-col items-center sticky top-4 self-start">
-                <IQOOPhoneSimulator onClose={() => setShowPhoneFrame(false)}>
-                  <MobileView
-                    syncState={syncState}
-                    onOpenCamera={() => setIsCameraOpen(true)}
-                    onOpenVoice={() => setIsVoiceOpen(true)}
-                    onRunTests={handleRunTests}
-                    onGenerateFix={handleGenerateFix}
-                    issue={issue}
-                    testResults={testResults}
-                    prReview={prReview}
-                    isFixApplied={isFixApplied}
-                    onSelectTab={(tab) => setActiveTab(tab)}
-                  />
-                </IQOOPhoneSimulator>
-              </div>
-            )}
+          {activeTab === 'graph' && (
+            <CodebaseGraphView nodes={nodes} />
+          )}
 
-          </div>
+          {activeTab === 'prs' && (
+            <PRReviewerCard
+              pr={prReview}
+              onGenerateFix={handleGenerateFix}
+              onOpenVoice={() => setIsVoiceOpen(true)}
+            />
+          )}
 
+          {activeTab === 'security' && (
+            <SecurityAgentView
+              onGenerateFix={handleGenerateFix}
+              isFixApplied={isFixApplied}
+            />
+          )}
+
+          {activeTab === 'tests' && (
+            <TestExecutionPanel
+              testResults={testResults}
+              isRunning={isTestRunning}
+              progressPercent={testProgressPercent}
+              progressStatus={testProgressStatus}
+              onRunTests={handleRunTests}
+              isFixApplied={isFixApplied}
+            />
+          )}
+
+          {activeTab === 'activity' && (
+            <ActivityTimeline activities={activityLog} />
+          )}
+
+          {activeTab === 'settings' && (
+            <SettingsView
+              syncState={syncState}
+              onToggleDemoMode={() => setSyncState(prev => ({ ...prev, isDemoMode: !prev.isDemoMode }))}
+              onChangeRuntime={(rt) => setSyncState(prev => ({ ...prev, aiRuntime: rt }))}
+            />
+          )}
         </main>
+
+        {/* Right Studio Panel: iQOO Phone Frame Simulator */}
+        {showPhoneFrame && (
+          <div className="w-[350px] sm:w-[370px] border-l border-slate-200 bg-slate-100/60 p-3 flex flex-col items-center justify-center shrink-0 overflow-hidden relative shadow-2xs hidden lg:flex">
+            <IQOOPhoneSimulator onClose={() => setShowPhoneFrame(false)}>
+              <MobileView
+                syncState={syncState}
+                onOpenCamera={() => setIsCameraOpen(true)}
+                onOpenVoice={() => setIsVoiceOpen(true)}
+                onRunTests={handleRunTests}
+                onGenerateFix={handleGenerateFix}
+                issue={issue}
+                testResults={testResults}
+                prReview={prReview}
+                isFixApplied={isFixApplied}
+                onSelectTab={(tab) => setActiveTab(tab)}
+              />
+            </IQOOPhoneSimulator>
+          </div>
+        )}
+
       </div>
 
       {/* Modals */}
